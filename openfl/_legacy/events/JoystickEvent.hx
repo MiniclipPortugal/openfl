@@ -1,4 +1,4 @@
-package openfl._legacy.events;
+package openfl._legacy.events;#if openfl_legacy
 
 
 import openfl._legacy.events.Event;
@@ -53,3 +53,4 @@ class JoystickEvent extends Event {
 	
 	
 }
+#end
