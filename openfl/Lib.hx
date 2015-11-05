@@ -1,5 +1,13 @@
 package openfl; #if !openfl_legacy
 
+#if macro
+import haxe.macro.Type;
+import haxe.macro.Expr;
+import haxe.macro.Compiler;
+import haxe.macro.Context;
+#end
+
+#if !macro
 
 import lime.system.System;
 import openfl.display.Application;
@@ -171,7 +179,79 @@ import js.Browser;
 	
 }
 
+#end
 
 #else
 typedef Lib = openfl._legacy.Lib;
+#end
+
+#if macro
+
+class GenModules {
+
+	public static function excludeOpenfl () {
+
+		#if openfljs
+		haxe.macro.Compiler.exclude ("openfl", true);
+		haxe.macro.Compiler.exclude ("lime", true);
+		#end
+
+	}
+
+	static public function addModuleMeta()
+	{
+		Context.onGenerate(generate);
+	}
+
+	static function generate(types:Array<haxe.macro.Type>):Void
+	{
+		for (t in types)
+		{
+			switch (t)
+			{
+				case TEnum(type, _):
+					var rt = type.get();
+
+					#if genopenfljs
+					//if (rt.pack.length == 0 || (rt.pack[0] != 'openfl' && rt.pack[0] != 'lime') ) continue;
+					//trace("adding meta to enum:"+type);
+					//addMetadata(rt, { name: ':expose' });
+					#end
+
+				case TInst(type, _):
+
+					var rt = type.get();
+					if (rt.isInterface || rt.isExtern) continue;
+
+					#if openfljs
+
+					if (rt.name == "DefaultAssetLibrary"){
+						addMetadata(rt, { name: ':expose' });
+					}
+
+					if (rt.name == "ApplicationMain"){
+						addMetadata(rt, { name: ':expose' });
+					}
+
+					#end
+
+					#if genopenfljs
+
+					#end
+
+				case _ :
+			}
+		}
+	}
+
+	
+	static function addMetadata(classType: BaseType, metadata: { name: String, ?params: Array<Expr> })
+	{
+		var params = (metadata.params == null)
+			? new Array<Expr>()
+			: metadata.params;
+
+			classType.meta.add(metadata.name, params, classType.pos);
+	}
+}
 #end

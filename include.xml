@@ -105,6 +105,9 @@
 			<haxedef name="canvas" unless="webgl || dom" />
 			<haxeflag name="--remap" value="flash:openfl" />
 			<dependency path="dependencies/soundjs.min.js" />
+			<dependency path="dependencies/openfl.js" if="openfljs" />
+
+			<haxedef name="js-unflatten" if="openfljs" />
 			
 		</section>
 		

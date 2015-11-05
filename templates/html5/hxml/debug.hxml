@@ -4,3 +4,6 @@
 -D html5
 --macro allowPackage("flash")
 -debug
+
+--macro openfl.Lib.GenModules.addModuleMeta()
+--macro openfl.Lib.GenModules.excludeOpenfl()

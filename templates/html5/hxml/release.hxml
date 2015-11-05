@@ -3,3 +3,5 @@
 -cp ::OUTPUT_DIR::/haxe
 -D html5
 --macro allowPackage("flash")
+--macro openfl.Lib.GenModules.addModuleMeta()
+--macro openfl.Lib.GenModules.excludeOpenfl()

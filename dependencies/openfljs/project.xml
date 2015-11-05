@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	
+	<meta title="Openfljs" package="com.sample.open" />
+	<app main="Main" path="Export" file="openfl" />
+	
+	<source path="." />
+	
+	<haxelib name="openfl" />
+
+	<haxeflag name="--macro include('openfl', true, ['openfl._internal.renderer.opengl.GLTextField','openfl._internal.renderer.TextFieldGraphics'])" />
+	<haxeflag name="-D genopenfljs" />
+	<haxeflag name="--macro openfl.Lib.GenModules.addModuleMeta()" />
+	<haxeflag name="--macro OpenflJS.excludeFromOpenflJS()" />
+	<haxeflag name="-cmd haxe --run OpenflJS"/>
+	
+</project>
